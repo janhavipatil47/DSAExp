@@ -1,0 +1,159 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+struct node
+{
+    int data;
+    struct node *next;
+};
+void main()
+{
+    struct node *head=NULL,*newnode,*temp;
+    int select;
+    do
+    {
+        printf("Select 1 to create a new node \n");
+        printf("Select 2 to insert a node at the beginning \n");
+        printf("Select 3 to insert a node at the end\n");
+        printf("Select 4 to insert a node at the middle\n");
+        printf("Select 5 to delete a node from the beginning \n");
+        printf("Select 6 to delete a node from the end\n");
+        printf("Select 7 to delete a node from the middle \n");
+        printf("Select 8 to view the linked list \n");
+        printf("Select your option \n");
+        scanf("%d",&select);
+        switch(select)
+        {
+            case 1:
+            {
+                int x;
+                printf("Enter the data to be inserted \n");
+                scanf("%d",&x);
+                newnode=(struct node*)malloc(sizeof(struct node*));
+                newnode->data=x;
+                newnode->next=NULL;
+                if(head==NULL)
+                {
+                    temp=head=newnode;
+                }
+                else
+                {
+                    temp->next=newnode;
+                    temp=newnode;
+                }
+                temp->next=head;
+                break;
+            }
+            case 2:
+            {
+                int x;
+                printf("Enter the data to be inserted\n");
+                scanf("%d",&x);
+                newnode=(struct node*)malloc(sizeof(struct node*));
+                newnode->data=x;
+                newnode->next=head;
+                temp=head;
+                while(temp->next!=head)
+                {
+                    temp=temp->next;
+                }
+                temp->next=newnode;
+                head=newnode;
+                break;
+            }
+            case 3:
+            {
+                int x;
+                printf("Enter the data to be inserted\n");
+                scanf("%d",&x);
+                newnode=(struct node*)malloc(sizeof(struct node*));
+                newnode->data=x;
+                newnode->next=NULL;
+                temp=head;
+                while(temp->next!=head)
+                {
+                    temp=temp->next;
+                }
+                temp->next=newnode;
+                newnode->next=head;
+                break;
+            }
+            case 4:
+            {
+                int x,loc,i=1;
+                printf("Enter the data to be inserted\n");
+                scanf("%d",&x);
+                newnode=(struct node*)malloc(sizeof(struct node*));
+                newnode->data=x;
+                printf("Enter the location at which the node is to be inserted \n");
+                scanf("%d",&loc);
+                temp=head;
+                while(i<loc-1)
+                {
+                    temp=temp->next;
+                    i++;
+                }
+                newnode->next=temp->next;
+                temp->next=newnode;
+                break;
+            }
+            case 5:
+            {
+                temp=head;
+                while(temp->next!=head)
+                {
+                    temp=temp->next;
+                }
+                temp->next=head->next;
+                
+                free(head);
+                head=temp->next;
+                break;
+                
+            }
+            case 6:
+            {
+                struct node *dnode;
+                dnode=head;
+                while(dnode->next!=head)
+                {
+                    temp=dnode;
+                    dnode=dnode->next;
+                }
+                temp->next=head;
+                free(dnode);
+                break;
+            }
+            case 7:
+            {
+                struct node *dnode;
+                dnode=head;
+                int loc,i=1;
+                printf("Enter the location from which the node is to be deleted \n");
+                scanf("%d",&loc);
+                while(i<loc)
+                {
+                    temp=dnode;
+                    dnode=dnode->next;
+                    i++;
+                }
+                temp->next=dnode->next;
+                free(dnode);
+                break;
+            }
+            case 8:
+            {
+                temp=head;
+                while(temp->next!=head)
+                {
+                    printf("%d\t",temp->data);
+                    temp=temp->next;
+                }
+                printf("%d\n",temp->data);
+                break;
+            }
+            default:printf("Invalid \n");
+        }
+    }
+    while(select>=1);
+}
