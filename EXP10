@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_VERTICES 100
+
+int graph[MAX_VERTICES][MAX_VERTICES];
+int visited[MAX_VERTICES];
+int numVertices;
+
+void initializeGraph() {
+for (int i = 0; i < MAX_VERTICES; i++) {
+for (int j = 0; j < MAX_VERTICES; j++) {
+graph[i][j] = 0;
+}
+visited[i] = 0; // Initialize visited array
+}
+}
+
+void addEdge(int from, int to) {
+graph[from][to] = 1; // Directed edge from 'from' to 'to'
+}
+
+void bfs(int start) {
+int queue[MAX_VERTICES], front = -1, rear = -1;
+visited[start] = 1;
+
+// Enqueue the starting vertex
+queue[++rear] = start;
+if (front == -1) front = 0;
+
+printf("BFS: ");
+while (front <= rear) {
+int current = queue[front++];
+printf("%d ", current);
+
+for (int i = 0; i < numVertices; i++) {
+if (graph[current][i] == 1 && !visited[i]) {
+visited[i] = 1;
+queue[++rear] = i; // Enqueue the vertex
+}
+}
+}
+printf("\n");
+}
+
+void dfs(int vertex) {
+visited[vertex] = 1;
+printf("%d ", vertex);
+
+for (int i = 0; i < numVertices; i++) {
+if (graph[vertex][i] == 1 && !visited[i]) {
+dfs(i);
+}
+
+}
+}
+
+int main() {
+int edges, from, to;
+
+printf("Enter the number of vertices: ");
+scanf("%d", &numVertices);
+initializeGraph();
+
+printf("Enter the number of edges: ");
+scanf("%d", &edges);
+
+printf("Enter the edges (from to):\n");
+for (int i = 0; i < edges; i++) {
+scanf("%d %d", &from, &to);
+addEdge(from, to);
+}
+
+printf("Enter the starting vertex for BFS: ");
+scanf("%d", &from);
+bfs(from);
+
+// Reset visited for DFS
+for (int i = 0; i < numVertices; i++) {
+visited[i] = 0;
+}
+
+printf("Enter the starting vertex for DFS: ");
+scanf("%d", &from);
+printf("DFS: ");
+dfs(from);
+printf("\n");
+
+return 0;
+}
