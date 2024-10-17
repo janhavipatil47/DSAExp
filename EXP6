@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<ctype.h>
+struct node
+{
+    int data;
+    struct node *next;
+    struct node *prev;
+};
+void main()
+{
+    struct node *temp,*head=NULL,*newnode;
+    int select;
+    do
+    {
+    printf("Select 1 to push the element on to the stack \n");
+    printf("Select 2 to pop the element from the stack \n");
+    printf("Select 3 to peep the element from the stack \n");
+    printf("Select 4 to view the stack \n");
+    printf("Select 5 to check if stack is empty \n");
+    printf("Select your option \n");
+    scanf("%d",&select);
+    switch(select)
+    {
+        case 1:{
+            int x;
+            printf("Enter the element to be pushed onto the stack \n");
+            scanf("%d",&x);
+            newnode=(struct node*)malloc(sizeof(struct node*));
+            newnode->data=x;
+            newnode->next=NULL;
+            newnode->prev=NULL;
+            if(head==NULL)
+            {
+                head=temp=newnode;
+            }
+            else
+            {
+                temp->next=newnode;
+                newnode->prev=temp;
+                temp=newnode;
+            }
+            break;
+        }
+        case 2:{
+            
+            temp=head;
+            while(temp->next!=NULL)
+            {
+                temp=temp->next;
+            }
+            printf("Popped:%d\n",temp->data);
+            temp=temp->prev;
+            temp->next=NULL;
+            break;
+        }
+        case 3:
+        {
+            temp=head;
+            while(temp->next!=NULL)
+            {
+                temp=temp->next;
+            }
+            printf("Peeped:%d \n",temp->data);
+            break;
+        }
+        case 4:
+        {
+            temp=head;
+            while(temp->next!=NULL)
+            {
+                temp=temp->next;
+            }
+            while(temp!=NULL)
+            {
+                printf("%d\n",temp->data);
+                temp=temp->prev;
+            }
+            break;
+        }
+        case 5:
+        {
+            if(head==NULL)
+            {
+                printf("Stack is empty \n");
+                
+            }
+            else
+            {
+                printf("Stack is not empty \n");
+            }
+            break;
+        }
+        default:printf("Invalid \n");
+    }
+    }
+    while(select>=1);
+}
